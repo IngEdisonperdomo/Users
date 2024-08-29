@@ -7,11 +7,13 @@ class User {
   private string $name;
   private string $email;
   private string $passwordHash;
+  private int $id;
 
   public function __construct(string $name, string $email, string $password) {
     $this->name = $name;
     $this->email = $email;
     $this->passwordHash = password_hash($password, PASSWORD_DEFAULT);
+    $this->id = random_int(1, 1000000);
   }
 
   // Getters
@@ -43,5 +45,9 @@ class User {
   // Verify password
   public function verifyPassword(string $password): bool {
     return password_verify($password, $this->passwordHash);
+  }
+
+  public function getId(): int {
+    return $this->id;
   }
 }

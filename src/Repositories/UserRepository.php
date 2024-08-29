@@ -8,7 +8,7 @@ use App\Exceptions\UserDoesNotExistException;
 class UserRepository implements UserRepositoryInterface {
     private array $users = [];
 
-    public function save(User $user): void {
+    public function save(User $user):void {
         $this->users[$user->getEmail()] = $user;
     }
 

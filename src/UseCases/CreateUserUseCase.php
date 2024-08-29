@@ -13,7 +13,7 @@ class CreateUserUseCase {
         $this->userRepository = $userRepository;
     }
 
-    public function execute(CreateUserRequest $request): void {
+    public function execute(CreateUserRequest $request) {
         $user = new User(
             $request->getName(),
             $request->getEmail(),
@@ -21,5 +21,39 @@ class CreateUserUseCase {
         );
 
         $this->userRepository->save($user);
+        
+        unset($user->password);
+
+        return $request;
     }
+
+    public function getUserRepository(): UserRepositoryInterface {
+        return $this->userRepository;
+    }
+
+    public function setUserRepository(UserRepositoryInterface $userRepository): void {
+        $this->userRepository = $userRepository;
+    }
+
+    public function getUserById(int $id): User {
+        return $this->userRepository->findById($id);
+    }
+
+    public function getAllUsers(): array {
+        return $this->userRepository->findAll();
+    }
+
+    public function updateUser(int $id, CreateUserRequest $request): void {
+        $user = $this->userRepository->findById($id);
+
+        $user->setName($request->getName());
+        $user->setEmail($request->getEmail());
+        $user->setPassword($request->getPassword());
+
+        $this->userRepository->update($user);
+    }
+
+
+
+
 }
