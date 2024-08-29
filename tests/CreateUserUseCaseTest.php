@@ -23,6 +23,6 @@ class CreateUserUseCaseTest extends TestCase {
         $user = $this->userRepository->getByIdOrFail("john@example.com");
         $this->assertEquals("John Doe", $user->getName());
         $this->assertEquals("john@example.com", $user->getEmail());
-        $this->assertTrue(password_verify("password123", $user->getPasswordHash()));
+        $this->assertTrue(password_verify("password123", $user->getPassword()));
     }
 }

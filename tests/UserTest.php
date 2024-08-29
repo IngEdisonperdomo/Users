@@ -12,9 +12,9 @@ class UserTest extends TestCase {
         $this->assertEquals("john@example.com", $user->getEmail());
     }
 
-    public function testGetPasswordHash() {
+    public function testGetPassword() {
         $user = new User("John Doe", "john@example.com", "password123");
-        $this->assertTrue(password_verify("password123", $user->getPasswordHash()));
+        $this->assertTrue(password_verify("password123", $user->getPassword()));
     }
 
     public function testSetName() {
@@ -32,7 +32,7 @@ class UserTest extends TestCase {
     public function testSetPassword() {
         $user = new User("John Doe", "john@example.com", "password123");
         $user->setPassword("newpassword123");
-        $this->assertTrue(password_verify("newpassword123", $user->getPasswordHash()));
+        $this->assertTrue(password_verify("newpassword123", $user->getPassword()));
     }
 
     public function testVerifyPassword() {

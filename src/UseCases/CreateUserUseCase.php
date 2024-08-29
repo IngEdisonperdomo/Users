@@ -6,6 +6,7 @@ use App\Repositories\UserRepositoryInterface;
 use App\Requests\CreateUserRequest;
 use App\Models\User;
 
+
 class CreateUserUseCase {
     private UserRepositoryInterface $userRepository;
 
@@ -14,17 +15,14 @@ class CreateUserUseCase {
     }
 
     public function execute(CreateUserRequest $request) {
+
         $user = new User(
             $request->getName(),
             $request->getEmail(),
-            $request->getPassword()
+            $request->getPassword(),
         );
 
-        $this->userRepository->save($user);
-        
-        unset($user->password);
-
-        return $request;
+        return $this->userRepository->save($user);
     }
 
     public function getUserRepository(): UserRepositoryInterface {
@@ -35,22 +33,24 @@ class CreateUserUseCase {
         $this->userRepository = $userRepository;
     }
 
-    public function getUserById(int $id): User {
+    public function getUserById(string $id) {
         return $this->userRepository->findById($id);
     }
+
 
     public function getAllUsers(): array {
         return $this->userRepository->findAll();
     }
 
-    public function updateUser(int $id, CreateUserRequest $request): void {
+    public function updateUser(string $id, CreateUserRequest $request) {
+        var_dump($request);
         $user = $this->userRepository->findById($id);
-
-        $user->setName($request->getName());
-        $user->setEmail($request->getEmail());
-        $user->setPassword($request->getPassword());
-
-        $this->userRepository->update($user);
+        if(!empty($user)) {
+            $user['password'] = $request->getPassword();
+            return $this->userRepository->update($user);
+        }else {
+            return "User not found";
+        }
     }
 
 

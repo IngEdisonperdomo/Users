@@ -21,7 +21,7 @@ class UserRepositoryTest extends TestCase {
         $retrievedUser = $this->userRepository->getByIdOrFail("john@example.com");
         $this->assertEquals("John Doe", $retrievedUser->getName());
         $this->assertEquals("john@example.com", $retrievedUser->getEmail());
-        $this->assertTrue(password_verify("password123", $retrievedUser->getPasswordHash()));
+        $this->assertTrue(password_verify("password123", $retrievedUser->getPassword()));
     }
 
     public function testWhenUserIsNotFoundByIdErrorIsThrown(): void {

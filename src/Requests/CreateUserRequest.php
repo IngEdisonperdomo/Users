@@ -2,15 +2,18 @@
 
 namespace App\Requests;
 
+
 class CreateUserRequest {
     private string $name;
     private string $email;
     private string $password;
+    
 
     public function __construct(string $name, string $email, string $password) {
         $this->name = $name;
         $this->email = $email;
         $this->password = $password;
+        
     }
 
     public function getName(): string {
@@ -24,4 +27,8 @@ class CreateUserRequest {
     public function getPassword(): string {
         return $this->password;
     }
+
+    
+
+
 }
