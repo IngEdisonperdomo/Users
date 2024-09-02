@@ -67,12 +67,11 @@ class UserController {
      * @OA\Get(
      *     path="/user/{id}",
      *     summary="Get a user by id",
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(
-     *             required={"id"},
-     *             @OA\Property(property="id", type="string", example="1"),
-     *         )
+     *     @OA\Parameter(
+     *      name="id",
+     *      in="path",
+     *      required=true,
+     *      description="ID of the user",
      *     ),
      *     @OA\Response(
      *         response=200,
@@ -122,7 +121,7 @@ class UserController {
         }, $users);
 
         http_response_code(200);
-
+        
         echo json_encode(['message' => 'Users found successfully!', 'data' => $responseData]);
     }
 
@@ -130,12 +129,19 @@ class UserController {
      * @OA\Put(
      *     path="/user/{id}",
      *     summary="Update a user by id",
+     *    @OA\Parameter(
+     *      name="id",
+     *      in="path",
+     *      required=true,
+     *      description="ID of the user",
+     *     ),
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
      *             required={"name","email","password"},
      *             @OA\Property(property="name", type="string", example="John Doe"),
-     *             @OA\Property(property="email", type="string", example="example@mail.com")
+     *             @OA\Property(property="email", type="string", example="example@mail.com"),
+     *             @OA\Property(property="password", type="string", example="password123")
      *        )
      *    ),
      *   @OA\Response(

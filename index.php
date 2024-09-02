@@ -16,26 +16,25 @@ header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header('Content-Type: application/json');
 
-
-
 $userRepository = new UserRepository();
-
 $createUserUseCase = new CreateUserUseCase($userRepository);
-
 $userController = new UserController($createUserUseCase);
 
+Flight::route('GET /user', [$userController, 'getAll']);
+Flight::route('POST /user', function() use ($userController) {
+  $requestData = json_decode(file_get_contents('php://input'), true);
+  $userController->create($requestData);
+});
+Flight::route('GET /user/@id', function($id) use ($userController) {
+  $userController->get($id);
+});
+Flight::route('PUT /user/@id', function($id) use ($userController) {
+  $requestData = json_decode(file_get_contents('php://input'), true);
+  $userController->update($id, $requestData);
+});
 
-// Simular una solicitud para crear un nuevo usuario
-$requestData = [
-  'name' => 'John Doe9',
-  'email' => 'john@example.com',
-  'password' => 'password9'
-];
+Flight::start();
 
-// Llamar al controlador para manejar la solicitud
-//$userController->create($requestData);
-//$userController->get("1");
-//$userController->getAll();
-//$userController->update('1', $requestData);
+
 
 
