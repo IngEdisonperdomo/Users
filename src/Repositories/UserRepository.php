@@ -48,18 +48,20 @@ class UserRepository implements UserRepositoryInterface {
         }
     }
 
-    public function update($user) {
+    public function update($id, $user) {
         
-        $stmt = $this->pdo->prepare('UPDATE users SET name = :name, password = :password WHERE email = :email');
+        
+        $stmt = $this->pdo->prepare('UPDATE users SET name = :name, password = :password WHERE id = :id');
+        
         $stmt->execute([
-            'email' => $user['email'],
-            'name' => $user['name'],
-            'password' => $user['password']
+            'name' => $user->getName(),
+            'password' => $user->getPassword(),
+            'id' => $id
         ]);
 
         
-        if ($stmt->rowCount() !== 0) {
-            return $this->findById($this->pdo->lastInsertId());
+        if ($stmt->rowCount() === 1) {
+            return $this->findById($id);
         } else {
             throw new UserDoesNotExistException();
         }

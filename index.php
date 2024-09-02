@@ -27,15 +27,15 @@ $userController = new UserController($createUserUseCase);
 
 // Simular una solicitud para crear un nuevo usuario
 $requestData = [
-  'name' => 'John Doe7',
+  'name' => 'John Doe9',
   'email' => 'john@example.com',
-  'password' => 'password123'
+  'password' => 'password9'
 ];
 
 // Llamar al controlador para manejar la solicitud
 //$userController->create($requestData);
 //$userController->get("1");
 //$userController->getAll();
-$userController->update("1", $requestData);
+//$userController->update('1', $requestData);
 
 

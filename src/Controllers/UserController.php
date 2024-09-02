@@ -112,7 +112,7 @@ class UserController {
      */
     public function getAll() {
         $users = $this->createUserUseCase->getAllUsers();
-        var_dump($users);
+        
         $responseData = array_map(function($user) {
             return [
                 'id' => $user['id'],
@@ -148,7 +148,7 @@ class UserController {
      * )
      * )
      */    
-    public function update(int $id, array $requestData) {
+    public function update(string $id, array $requestData) {
         $request = new CreateUserRequest(
             $requestData['name'],
             $requestData['email'],

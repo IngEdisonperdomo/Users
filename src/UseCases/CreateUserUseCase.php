@@ -43,11 +43,17 @@ class CreateUserUseCase {
     }
 
     public function updateUser(string $id, CreateUserRequest $request) {
-        var_dump($request);
+        
         $user = $this->userRepository->findById($id);
+
         if(!empty($user)) {
-            $user['password'] = $request->getPassword();
-            return $this->userRepository->update($user);
+            $user = new User(
+                $request->getName(),
+                $request->getEmail(),
+                $request->getPassword(),
+            );
+
+            return $this->userRepository->update($id,$user);
         }else {
             return "User not found";
         }
